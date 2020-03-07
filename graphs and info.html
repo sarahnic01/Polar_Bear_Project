@@ -1,0 +1,143 @@
+<button onclick="makeGraph()">both</button>
+<button onclick="makeGraphIre()">polar bear sightings</button>
+<button onclick="makeGraphAus()">ice concentration</button>
+<div id="testboth">
+</div>
+<div id = "testice">
+</div>
+<div id = "testpolarbears">
+</div>
+<div id= "myGraph">
+</div>
+<script src= "https://cdn.plot.ly/plotly-1.2.0.min.js"></script>
+<script src="https://lc-project-d2adc.firebaseio.com/"></script>
+<script>
+// Your web app's Firebase configuration
+var firebaseConfig = {
+apiKey: "AIzaSyAsU4LwaT9CfOr10wUpl-ONBsrI-BOfVDo",
+authDomain: "",
+databaseURL: "https://lc-project-d2adc.firebaseio.com/",
+projectId: "lc-project-d2adc",
+storageBucket: "portlaoistol.appspot.com",
+messagingSenderId: "847888998869",
+appId: "1:102975396372:web:f81b50f7139314bf826501"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+</script>
+<script>
+var polarbearList = [];
+var iceconcentrationList = [];
+var optionA = firebase.database().ref("polarbears");
+
+optionA.on("child_added", function(data, prevChildKey)
+{
+
+var polarbears = data.val().iceconcentration;
+ausTemp = parseFloat(ausTemp); //only needed if going to graph it coz changing to floats
+ausList.push(ausTemp);
+
+var ireTemp = data.val().ireTemp;
+ireTemp = parseFloat(ireTemp); //only needed if going to graph it coz changing to floats
+ireList.push(ireTemp);
+
+
+var ireMax = Math.max.apply(null, ireList);
+document.getElementById("ireMax").innerHTML = ireMax;
+
+// document.getElementById("testAus").innerHTML += ausTemp + "<br>";
+
+
+makeGraph();
+
+//ausList.push(parseFloat(data.val().ausTemp); //parseFloat changing to int
+         
+//ireList.push(data.val().ausTemp);
+
+//var dataPoint = data.val();
+//ausList.push(dataPoint.ausTemp);
+//alert(data.val().ireTemps)
+});
+
+function makeGraph(){
+var ireTemps = {
+y: ireList,
+name: "Ireland",
+mode: 'lines+markers'
+};
+
+var ausTemps = {
+y: ausList,
+name: "Australia",
+mode: 'lines+markers'
+};
+
+var layout = {
+title: 'Comparing Temps',
+xaxis: {title: 'Year'},
+yaxis: {title: 'Temperature'}
+
+};
+
+var data = [ireTemps, ausTemps];
+Plotly.newPlot('myGraph', data, layout);
+
+}
+
+function makeGraphAus(){
+var ausTemps = {
+y: ausList,
+name: "Australia",
+mode: 'lines+markers'
+};
+
+var ausTemps = {
+y: ausList,
+name: "Australia",
+mode: 'lines+markers'
+};
+
+var layout = {
+title: 'Comparing Temps',
+xaxis: {title: 'Year'},
+yaxis: {title: 'Temperature'}
+
+};
+
+var data = [ausTemps];
+Plotly.newPlot('myGraph', data, layout);
+
+}
+
+function makeGraphIre(){
+var ireTemps = {
+y: ireList,
+name: "Ireland",
+mode: 'lines+markers'
+};
+
+var ireTemps = {
+y: ireList,
+name: "Ireland",
+mode: 'lines+markers'
+};
+
+var layout = {
+title: 'Comparing Temps',
+xaxis: {title: 'Year'},
+yaxis: {title: 'Temperature'}
+
+};
+
+var data = [ireTemps];
+Plotly.newPlot('myGraph', data, layout);
+
+}
+
+
+</script>
+   
+</div>
+<script src="Resources/JS/Graphs_Display.js"></script>
+
+<a href="MainPage.html">Return to Home Page</a>
