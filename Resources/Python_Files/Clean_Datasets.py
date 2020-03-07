@@ -1,31 +1,13 @@
 import csv
+clean_file = open("../Data_Files/Clean_Data_Ice_Concentration.csv", "w")
+clean_file.write("January of Years" + "," + "NE Shelf"+","+"NE Deep"+"\n")
 
-data = []
 with open ("../Data_Files/Original_Ice_Concentration_Dataset.csv","r") as file:
-    original_file = csv.DictReader(file)
+    csv_file = csv.DictReader(file)
+    for row in csv_file:
+        # print(row)
+        if(row["year"] == "" or row[' NE shelf'] == "" or row[' NE deep'] == ""):
+            break
+        if(row["month"] == " 1"):
+            clean_file.write(row['year'] + "," + row[' NE shelf'] + "," + row[' NE deep']+"\n")
 
-clean_file = open("Clean_Data_Ice_Concentration.csv", "w")
-clean_file.write("Month=January" + "," + "Year"+","+"Ice Concentration"+"\n")
-
-# Lists to hold our figures efor each year
-years = []
-iceconcentrations = []
-
-# Loop until we meet a blank row in the original file
-while True:
- # Read a line of data from CSV file
-    readdata = original_file.readline()
-# Split the file into an array based on comma seperator 
-    InputList = readdata.split(',')
-# Break from while loop when we hit an empty line
-    if (InputList[0] == ""):                
-         break   
-# If we identify the row as 1991...
-    if (InputList[1] == "1"):
-        # Check if there is a empty entry, skip it if so
-        if (InputList[1] != "   " and InputList[3] != "  "):
-            # Write just the required rows/ data entries and columns to the cleaned file
-            clean_file.write(InputList[0] + "," + InputList[4] + "," + InputList[5]+"\n")
-            # Create a lists for each year
-clean_file.close()
-original_file.close()
