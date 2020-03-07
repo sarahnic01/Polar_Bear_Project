@@ -1,8 +1,9 @@
 import csv
-# *********************************** Main Program ************************************* #
-# Open our files in read and write modes
-original_file = open("../Data_Files/Ice_Melting_Polar_Bears_Effect.csv", "r")
-# original_file = open("../Data_Files/Ice_Melting_Polar_Bears_Effect.csv", "r")
+
+data = []
+with open ("../Data_Files/Original_Ice_Concentration_Dataset.csv","r") as file:
+    original_file = csv.DictReader(file)
+
 clean_file = open("Clean_Data_Ice_Concentration.csv", "w")
 clean_file.write("Month=January" + "," + "Year"+","+"Ice Concentration"+"\n")
 
